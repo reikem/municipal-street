@@ -1,77 +1,82 @@
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ShieldCheck, CalendarCheck, Info, ChevronRight } from 'lucide-react-native';
 
-import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#003b5a', dark: '#1D3D47' }}
       headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
+        <View style={styles.headerContent}>
+          <ThemedText type="title" style={styles.headerTitle}>Gestión Municipal</ThemedText>
+          <ThemedText style={styles.headerSubtitle}>Panel del Vendedor</ThemedText>
+        </View>
       }>
+      
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="subtitle">Accesos Directos</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
+      <ThemedView style={styles.menuContainer}>
+        {/* Botón a Credencial */}
+        <TouchableOpacity 
+          style={styles.menuItem} 
+          onPress={() => router.push('/credential')}
+          activeOpacity={0.7}
+        >
+          <View style={[styles.iconContainer, { backgroundColor: '#cbe6ff' }]}>
+            <ShieldCheck color="#003b5a" size={28} />
+          </View>
+          <View style={styles.menuTextContainer}>
+            <ThemedText type="defaultSemiBold">Mi Credencial Digital</ThemedText>
+            <ThemedText type="default" style={styles.menuDescription}>Verificación oficial y código QR.</ThemedText>
+          </View>
+          <ChevronRight color="#c1c7cf" size={20} />
+        </TouchableOpacity>
+
+        {/* Botón a Asistencia */}
+        <TouchableOpacity 
+          style={styles.menuItem} 
+          onPress={() => router.push('/attendance')}
+          activeOpacity={0.7}
+        >
+          <View style={[styles.iconContainer, { backgroundColor: '#7bf8a1' }]}>
+            <CalendarCheck color="#006d37" size={28} />
+          </View>
+          <View style={styles.menuTextContainer}>
+            <ThemedText type="defaultSemiBold">Control de Asistencia</ThemedText>
+            <ThemedText type="default" style={styles.menuDescription}>Registrar entrada y ver historial.</ThemedText>
+          </View>
+          <ChevronRight color="#c1c7cf" size={20} />
+        </TouchableOpacity>
+
+        {/* Botón a Modal de Información */}
+        <TouchableOpacity 
+          style={styles.menuItem} 
+          onPress={() => router.push('/modal')}
+          activeOpacity={0.7}
+        >
+          <View style={[styles.iconContainer, { backgroundColor: '#eceef0' }]}>
+            <Info color="#41474e" size={28} />
+          </View>
+          <View style={styles.menuTextContainer}>
+            <ThemedText type="defaultSemiBold">Ayuda y Soporte</ThemedText>
+            <ThemedText type="default" style={styles.menuDescription}>Información sobre el uso de la App.</ThemedText>
+          </View>
+          <ChevronRight color="#c1c7cf" size={20} />
+        </TouchableOpacity>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+
+      <ThemedView style={styles.footerContainer}>
+        <ThemedText style={styles.footerText}>
+          Próximamente: Sistema de gestión de permisos y notificaciones.
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
@@ -79,20 +84,62 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  headerContent: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingTop: 40,
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 28,
+  },
+  headerSubtitle: {
+    color: '#9bccf6',
+    fontSize: 16,
+    fontWeight: '600',
+  },
   titleContainer: {
+    paddingHorizontal: 8,
+    marginVertical: 16,
+  },
+  menuContainer: {
+    gap: 12,
+  },
+  menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)', // Se adapta sutilmente al dark mode
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#e0e3e5',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  iconContainer: {
+    padding: 12,
+    borderRadius: 12,
+    marginRight: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  menuTextContainer: {
+    flex: 1,
+    gap: 2,
+  },
+  menuDescription: {
+    fontSize: 13,
+    color: '#72787f',
+  },
+  footerContainer: {
+    marginTop: 32,
+    padding: 16,
+    backgroundColor: '#f2f4f6',
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#72787f',
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
 });
