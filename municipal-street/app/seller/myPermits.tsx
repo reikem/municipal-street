@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Share } from 'react-native';
 import { Download, History, MapPin, Verified, ShieldCheck, CalendarClock } from 'lucide-react-native';
-import { StatusCard } from '@/components/ui/StatusCard';
+import { StatusCard } from '@/components/ui/statusCard';
+
 
 export default function MyPermitsScreen() {
   

@@ -4,6 +4,7 @@ import { Settings2, Clock, CheckSquare, Users, Save, RotateCcw, Sun, Moon, Plus 
 import { BentoCard } from '@/components/ui/bentoCard';
 
 
+
 export default function CommuneRulesScreen() {
   const [gpsEnabled, setGpsEnabled] = useState(true);
   const [photoEnabled, setPhotoEnabled] = useState(true);
